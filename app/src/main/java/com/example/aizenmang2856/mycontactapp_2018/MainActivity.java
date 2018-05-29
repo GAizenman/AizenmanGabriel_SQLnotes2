@@ -1,5 +1,6 @@
 package com.example.aizenmang2856.mycontactapp_2018;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -59,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         while (res.moveToNext()){
             //append res column 0,1,2,3 to the buffer - see StringBuffer and Cursor api's
             //Delimit each of the "appends" with a line feed "\n"
-            buffer.append(" Contact " + res.getString(0) + ": " + "\n");
+            buffer.append("                 - Contact " + res.getString(0) + " - " + "\n");
             buffer.append(" Name: " + res.getString(1) + "\n");
             buffer.append(" Number: " + res.getString(2) + "\n");
-            buffer.append(" Address: " + res.getString(3));
+            buffer.append(" Address: " + res.getString(3) + "\n\n");
         }
         showMessage("Data", buffer.toString());
 
@@ -77,5 +78,13 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+    public static final String EXTRA_MESSAGE = "com.example.aizenmang2856.mycontactapp_2018.MESSAGE";
+    public void searchRecord(View view){
+        Log.d("MyContactApp", "MainActivity: launching searchActivity");
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+        startActivity(intent);
+    }
 
 }
