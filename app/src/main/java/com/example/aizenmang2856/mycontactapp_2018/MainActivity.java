@@ -82,8 +82,24 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.aizenmang2856.mycontactapp_2018.MESSAGE";
     public void searchRecord(View view){
         Log.d("MyContactApp", "MainActivity: launching searchActivity");
+        Cursor res = myDb.getAllData();
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()){
+            //append res column 0,1,2,3 to the buffer - see StringBuffer and Cursor api's
+            //Delimit each of the "appends" with a line feed "\n"
+            if (res.getString(1).matches((editName.getText().toString()))) {
+                buffer.append("                 - Contact " + res.getString(0) + " - " + "\n");
+                buffer.append(" Name: " + res.getString(1) + "\n");
+                buffer.append(" Number: " + res.getString(2) + "\n");
+                buffer.append(" Address: " + res.getString(3) + "\n\n");
+            }
+        }
+        if (buffer.length() == 0 ){
+            buffer.append("              - No Matches - ");
+        }
+
+        intent.putExtra(EXTRA_MESSAGE, buffer.toString());
         startActivity(intent);
     }
 

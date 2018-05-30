@@ -19,7 +19,7 @@ public class SearchActivity extends AppCompatActivity {
         //set the string in the textView
         TextView textView = findViewById(R.id.textView4);
         textView.setText(message);
-        DatabaseHelper mDB = new DatabaseHelper(this);
+
 
 
 
